@@ -1,0 +1,399 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+
+    /* PAGE BACKGROUND */
+
+    .donation-page {
+        min-height: calc(100vh - 70px);
+        background: linear-gradient(135deg, #eaf8f0, #f8fffb);
+        padding: 40px 15px 60px;
+    }
+
+
+    /* MAIN CARD */
+
+    .donation-card {
+        max-width: 850px;
+        margin: auto;
+        background: #ffffff;
+        border-radius: 20px;
+        overflow: hidden;
+
+        box-shadow:
+            0 12px 35px rgba(0, 0, 0, 0.10);
+    }
+
+
+    /* HEADER */
+
+    .donation-header {
+        background: linear-gradient(
+            135deg,
+            #198754,
+            #20c997
+        );
+
+        color: white;
+        padding: 28px 35px;
+    }
+
+    .donation-header h2 {
+        margin: 0;
+        font-weight: 700;
+        font-size: 28px;
+    }
+
+    .donation-header p {
+        margin: 6px 0 0;
+        opacity: 0.9;
+    }
+
+
+    /* FORM AREA */
+
+    .donation-body {
+        padding: 35px;
+    }
+
+
+    /* DJANGO FORM */
+
+    .donation-form p {
+        margin-bottom: 20px;
+    }
+
+
+    .donation-form label {
+        display: block;
+
+        font-weight: 600;
+
+        color: #344054;
+
+        margin-bottom: 7px;
+
+        font-size: 15px;
+    }
+
+
+    /* INPUTS */
+
+    .donation-form input,
+    .donation-form select,
+    .donation-form textarea {
+
+        width: 100%;
+
+        min-height: 46px;
+
+        padding: 10px 13px;
+
+        border: 1px solid #d5dce3;
+
+        border-radius: 9px;
+
+        background: #ffffff;
+
+        font-size: 15px;
+
+        transition: all 0.2s ease;
+    }
+
+
+    .donation-form textarea {
+        min-height: 120px;
+        resize: vertical;
+    }
+
+
+    /* FOCUS */
+
+    .donation-form input:focus,
+    .donation-form select:focus,
+    .donation-form textarea:focus {
+
+        outline: none;
+
+        border-color: #198754;
+
+        box-shadow:
+            0 0 0 3px rgba(25, 135, 84, 0.12);
+    }
+
+
+    /* HELP TEXT */
+
+    .donation-form .helptext {
+
+        display: block;
+
+        margin-top: 5px;
+
+        color: #6c757d;
+
+        font-size: 12px;
+    }
+
+
+    /* ERRORS */
+
+    .donation-form .errorlist {
+
+        color: #dc3545;
+
+        font-size: 13px;
+
+        margin: 5px 0;
+
+        padding-left: 18px;
+    }
+
+
+    /* BUTTON AREA */
+
+    .donation-buttons {
+
+        display: flex;
+
+        gap: 10px;
+
+        margin-top: 25px;
+
+        flex-wrap: wrap;
+    }
+
+
+    /* SUBMIT */
+
+    .btn-donation {
+
+        background: linear-gradient(
+            135deg,
+            #198754,
+            #20c997
+        );
+
+        color: white;
+
+        border: none;
+
+        border-radius: 9px;
+
+        padding: 12px 24px;
+
+        font-size: 16px;
+
+        font-weight: 600;
+
+        transition: 0.2s;
+    }
+
+    .btn-donation:hover {
+
+        color: white;
+
+        transform: translateY(-2px);
+
+        box-shadow:
+            0 7px 18px rgba(25, 135, 84, 0.25);
+    }
+
+
+    /* CANCEL */
+
+    .btn-cancel {
+
+        background: #6c757d;
+
+        color: white;
+
+        border: none;
+
+        border-radius: 9px;
+
+        padding: 12px 24px;
+
+        font-size: 16px;
+
+        text-decoration: none;
+
+        transition: 0.2s;
+    }
+
+    .btn-cancel:hover {
+
+        background: #5c636a;
+
+        color: white;
+    }
+
+
+    /* REPORT NGO */
+
+    .btn-report {
+
+        background: white;
+
+        color: #dc3545;
+
+        border: 1px solid #dc3545;
+
+        border-radius: 9px;
+
+        padding: 12px 24px;
+
+        font-size: 16px;
+
+        font-weight: 600;
+
+        text-decoration: none;
+
+        transition: 0.2s;
+    }
+
+    .btn-report:hover {
+
+        background: #dc3545;
+
+        color: white;
+    }
+
+
+    /* IMAGE INPUT */
+
+    .donation-form input[type="file"] {
+
+        padding: 8px;
+
+        background: #f8f9fa;
+    }
+
+
+    /* DATE INPUT */
+
+    .donation-form input[type="datetime-local"] {
+
+        cursor: pointer;
+    }
+
+
+    /* MOBILE */
+
+    @media (max-width: 600px) {
+
+        .donation-page {
+            padding: 20px 10px 40px;
+        }
+
+        .donation-header {
+            padding: 22px;
+        }
+
+        .donation-header h2 {
+            font-size: 23px;
+        }
+
+        .donation-body {
+            padding: 22px;
+        }
+
+        .donation-buttons {
+            flex-direction: column;
+        }
+
+        .btn-donation,
+        .btn-cancel,
+        .btn-report {
+            width: 100%;
+            text-align: center;
+        }
+    }
+
+</style>
+
+
+<div class="donation-page">
+
+    <div class="donation-card">
+
+
+        <!-- HEADER -->
+
+        <div class="donation-header">
+
+            <h2>
+                🍱 Add Food Donation
+            </h2>
+
+            <p>
+                Share surplus food with people who need it.
+            </p>
+
+        </div>
+
+
+        <!-- FORM -->
+
+        <div class="donation-body">
+
+            <form method="POST"
+                  enctype="multipart/form-data"
+                  class="donation-form">
+
+                {% csrf_token %}
+
+                {{ form.as_p }}
+
+
+                <div class="donation-buttons">
+
+                    <!-- SUBMIT DONATION -->
+
+                    <button type="submit"
+                            class="btn-donation">
+
+                        <i class="bi bi-check-circle"></i>
+
+                        Submit Donation
+
+                    </button>
+
+
+                    <!-- CANCEL -->
+
+                    <a href="{% url 'donor_dashboard' %}"
+                       class="btn-cancel">
+
+                        Cancel
+
+                    </a>
+
+
+                    <!-- REPORT NGO -->
+
+                    {% if ngo %}
+
+                    <a href="{% url 'report_user' ngo.id %}"
+                       class="btn-report">
+
+                        ⚠️ Report NGO
+
+                    </a>
+
+                    {% endif %}
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

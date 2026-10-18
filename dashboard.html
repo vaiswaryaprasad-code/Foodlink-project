@@ -1,0 +1,408 @@
+
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container-fluid mt-4">
+  <!-- Welcome Banner -->
+  <div
+    class="card border-0 shadow-lg mb-4"
+    style="
+      background: linear-gradient(135deg, #0d6efd, #20c997);
+      border-radius: 20px;
+    "
+  >
+    <div
+      class="welcome-banner"
+      style="
+        background-color: #198754 !important;
+        color: white;
+        border-radius: 20px;
+        padding: 25px 30px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      "
+    >
+      <div class="row align-items-center">
+        <div class="col-md-8">
+          <h2 class="fw-bold">
+            👋 Welcome, {{ request.user.ngoprofile.ngo_name }}
+          </h2>
+
+          <p class="mb-0 fs-5">
+            Help distribute food to people who need it most.
+          </p>
+        </div>
+
+        <div class="col-md-4 text-md-end">
+          <a href="{% url 'available_food' %}" class="btn btn-light btn-lg">
+            🍱 View Available Food
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Statistics -->
+  <div class="row g-4 mb-4">
+    <div class="col-lg-3 col-md-6">
+      <div class="card border-0 shadow h-100">
+        <div class="card-body text-center">
+          <div style="font-size: 45px">🍱</div>
+          <h2 class="fw-bold text-success">{{ total_available }}</h2>
+          <h5>Available Food</h5>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+      <div class="card border-0 shadow h-100">
+        <div class="card-body text-center">
+          <div style="font-size: 45px">🤝</div>
+          <h2 class="fw-bold text-primary">{{ total_claims }}</h2>
+          <h5>My Claims</h5>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+      <div class="card border-0 shadow h-100">
+        <div class="card-body text-center">
+          <div style="font-size: 45px">📦</div>
+          <h2 class="fw-bold text-warning">{{ claimed_food }}</h2>
+          <h5>Total Claimed</h5>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+      <div class="card border-0 shadow h-100">
+        <div class="card-body text-center">
+          <div style="font-size: 45px">⏰</div>
+          <h2 class="fw-bold text-danger">{{ expired_food }}</h2>
+          <h5>Expired Food</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI Recommended Food -->
+  <div class="card shadow border-0 mb-4">
+    <div
+      class="card-header text-white"
+      style="background-color: #198754 !important;"
+    >
+      <h4 class="mb-0">🤖 AI Recommended Food</h4>
+    </div>
+
+    <div class="card-body">
+      {% if best_food %}
+      <div class="row align-items-center">
+
+        <!-- Food Name -->
+        <div class="col-md-3">
+          <h6>Food Item</h6>
+          <h4>{{ best_food.food_name }}</h4>
+        </div>
+
+        <!-- Safety Score -->
+        <div class="col-md-3">
+          <h6>Safety Score</h6>
+          <h3 class="text-success">
+            {{ best_food.food_safety_score }}/100
+          </h3>
+        </div>
+
+        <!-- Food Status -->
+        <div class="col-md-3">
+          <h6>Food Status</h6>
+
+          {% if best_food.food_status == "Safe" %}
+            <span class="badge bg-success fs-6">Safe</span>
+          {% elif best_food.food_status == "Moderate Risk" %}
+            <span class="badge bg-warning text-dark fs-6">
+              Moderate Risk
+            </span>
+          {% else %}
+            <span class="badge bg-danger fs-6">Unsafe</span>
+          {% endif %}
+        </div>
+
+        <!-- Claim Button -->
+        <div class="col-md-3 text-end">
+          <form
+            method="POST"
+            action="{% url 'claim_food' best_food.id %}"
+          >
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success btn-lg">
+              🤝 Claim Now
+            </button>
+          </form>
+        </div>
+
+      </div>
+      {% else %}
+      <div class="alert alert-info text-center mb-0">
+        🎉 All available food has been claimed.
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- AI Recommended Nearby Food -->
+  <div class="card shadow border-0 mb-4">
+    <div
+      class="card-header text-white"
+      style="background-color: #198754 !important;"
+    >
+      <h4 class="mb-0">📍 AI Recommended Nearby Food</h4>
+    </div>
+
+    <div class="card-body">
+      {% if nearest_food %}
+      <div class="row align-items-center">
+        <div class="col-md-8">
+          <h5 class="fw-bold">
+            {{ nearest_food.food_name }}
+          </h5>
+
+          <p class="mb-2">
+            <strong>📍 Pickup Address:</strong>
+            {{ nearest_food.pickup_address }}
+          </p>
+
+          <p class="mb-2">
+            <strong>🏙️ City:</strong>
+            {{ nearest_food.city }}
+          </p>
+
+          <p class="mb-2">
+            <strong>📏 Distance:</strong>
+            {{ nearest_food.distance }} km
+          </p>
+
+          <p class="mb-0">
+            <strong>⏰ Expiry:</strong>
+            {{ nearest_food.expiry_time }}
+          </p>
+        </div>
+
+        
+<div class="col-md-4 text-end">
+
+    {% if nearest_food.image %}
+        <a
+            href="{{ nearest_food.image.url }}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-outline-success mb-2"
+        >
+            View Image
+        </a>
+    {% endif %}
+
+    <!-- Fixed Claim Now Button -->
+    <form
+        method="POST"
+        action="{% url 'claim_food' nearest_food.id %}"
+        class="d-inline-block"
+    >
+        {% csrf_token %}
+
+        <button
+            type="submit"
+            class="btn text-white"
+            style="
+                background-color: #198754 !important;
+                border-color: #198754 !important;
+            "
+        >
+            <i class="bi bi-box-seam"></i>
+            Claim Now
+        </button>
+    </form>
+
+</div>
+
+
+      {% else %}
+      <div class="text-center py-3">
+        <i class="bi bi-geo-alt fs-1 text-muted"></i>
+        <p class="text-muted mt-2 mb-0">
+          No nearby food donations available.
+        </p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Available Food Donations -->
+  <div class="card shadow border-0">
+    <div
+      class="card-header text-white"
+      style="background-color: #198754 !important;"
+    >
+      <h4 class="mb-0">🍽 Available Food Donations</h4>
+    </div>
+
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle">
+
+          <!-- Table Headings -->
+          <thead class="table-light">
+            <tr>
+              <th>ID</th>
+              <th>Food</th>
+              <th>Quantity</th>
+              <th>Safety</th>
+              <th>Status</th>
+              <th>Priority</th>
+              <th>Expiry</th>
+              <th>Food Image</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {% for food in available_food %}
+            <tr>
+              <td>{{ food.id }}</td>
+
+              <td>
+                <strong>{{ food.food_name }}</strong>
+              </td>
+
+              <td>{{ food.quantity }}</td>
+
+              <!-- Safety Score -->
+              <td>
+                <div class="progress">
+                  <div
+                    class="progress-bar {% if food.food_safety_score >= 80 %}bg-success{% elif food.food_safety_score >= 50 %}bg-warning{% else %}bg-danger{% endif %}"
+                    style="width: {{ food.food_safety_score }}%;"
+                  >
+                    {{ food.food_safety_score }}
+                  </div>
+                </div>
+              </td>
+
+              <!-- Food Status -->
+              <td>
+                {% if food.food_status == "Safe" %}
+                  <span class="badge bg-success">Safe</span>
+                {% elif food.food_status == "Moderate Risk" %}
+                  <span class="badge bg-warning text-dark">
+                    Moderate
+                  </span>
+                {% else %}
+                  <span class="badge bg-danger">Unsafe</span>
+                {% endif %}
+              </td>
+
+              <!-- Priority -->
+              <td>
+                {% if food.priority_score >= 80 %}
+                  <span class="badge bg-danger">🔥 High</span>
+                {% elif food.priority_score >= 50 %}
+                  <span class="badge bg-warning text-dark">
+                    ⚠ Medium
+                  </span>
+                {% else %}
+                  <span class="badge bg-success">✅ Low</span>
+                {% endif %}
+
+                <br>
+                <small>{{ food.priority_score }}/100</small>
+              </td>
+
+              <!-- Expiry -->
+              <td>{{ food.expiry_time|date:"d M Y H:i" }}</td>
+
+              <!-- View Uploaded Food Image -->
+              <td>
+                {% if food.image %}
+                  <a
+                    href="{{ food.image.url }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn btn-outline-primary btn-sm"
+                  >
+                    <i class="bi bi-image"></i>
+                    View Image
+                  </a>
+                {% else %}
+                  <span class="text-muted">No Image</span>
+                {% endif %}
+              </td>
+
+              ```html
+<!-- Claim Button -->
+<td>
+    <form
+        method="POST"
+        action="{% url 'claim_food' food.id %}"
+        style="display: inline;"
+    >
+        {% csrf_token %}
+
+        <button
+            type="submit"
+            class="btn btn-success btn-sm"
+        >
+            Claim
+        </button>
+    </form>
+</td>
+</tr>
+
+
+
+            {% empty %}
+            <tr>
+              <td colspan="9" class="text-center p-5">
+                No food donations available.
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Claims -->
+  <div class="card shadow border-0 mt-4">
+    <div class="card-header bg-dark text-white">
+      <h4>📋 Recent Claims</h4>
+    </div>
+
+    <div class="card-body">
+      {% for claim in recent_claims %}
+      <div class="d-flex justify-content-between border-bottom py-3">
+        <div>
+          <strong>{{ claim.donation.food_name }}</strong>
+          <br>
+          <small class="text-muted">
+            {{ claim.claimed_at|date:"d M Y H:i" }}
+          </small>
+        </div>
+
+        <span class="badge bg-success">Claimed</span>
+      </div>
+
+      <p>
+        <strong>Food Safety:</strong>
+        {{ claim.donation.food_safety_score }}%
+      </p>
+
+      {% empty %}
+      <p class="text-muted">No claims yet.</p>
+      {% endfor %}
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}
+

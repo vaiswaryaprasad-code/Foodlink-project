@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+<h2 class="mb-4">
+
+Admin Dashboard
+
+</h2>
+
+<div class="row">
+
+<div class="col-md-3">
+
+<div class="card bg-primary text-white">
+
+<div class="card-body">
+
+<h5>Total Users</h5>
+
+<h2>{{ users }}</h2>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="card bg-success text-white">
+
+<div class="card-body">
+
+<h5>Total Donations</h5>
+
+<h2>{{ donations }}</h2>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="card bg-warning">
+
+<div class="card-body">
+
+<h5>Available Food</h5>
+
+<h2>{{ available }}</h2>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="card bg-danger text-white">
+
+<div class="card-body">
+
+<h5>Claimed Food</h5>
+
+<h2>{{ claimed }}</h2>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<hr>
+
+<div class="alert alert-info">
+
+<b>Total Food Claims:</b> {{ foodclaims }}
+
+</div>
+
+</div>
+
+{% endblock %}
+
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-dark text-white">
+      <h4>🌍 Community Impact</h4>
+    </div>
+
+    <div class="card-body">
+      <div class="row text-center">
+        <div class="col-md-3">
+          <h2 class="text-primary">{{ total }}</h2>
+
+          <p>Total Donations</p>
+        </div>
+
+        <div class="col-md-3">
+          <h2 class="text-success">{{ claimed }}</h2>
+
+          <p>Families Helped</p>
+        </div>
+
+        <div class="col-md-3">
+          <h2 class="text-warning">{{ available }}</h2>
+
+          <p>Waiting for Pickup</p>
+        </div>
+
+        <div class="col-md-3">
+          <h2 class="text-danger">{{ expired }}</h2>
+
+          <p>Food Expired</p>
+        </div>
+      </div>
+    </div>
+  </div>

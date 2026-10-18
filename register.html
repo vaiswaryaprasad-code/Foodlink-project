@@ -1,0 +1,1169 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FoodLink - Register</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+
+/* ================= NAVBAR ================= */
+
+.register-navbar {
+    background: linear-gradient(135deg, #198754, #20c997);
+    padding: 14px 0;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+
+    background-image:
+        linear-gradient(
+            rgba(178, 245, 208, 0.75),
+            rgba(235, 251, 242, 0.75)
+        ),
+
+        url("{% static 'images/doodles.jpg' %}");
+
+    background-size: cover, 500px;
+    background-position: center, center;
+    background-repeat: no-repeat, repeat;
+
+    background-color: #f4faf7;
+}
+
+.register-navbar .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.brand {
+    color: white;
+    text-decoration: none;
+    font-size: 23px;
+    font-weight: 700;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    margin-left: 25px;
+    font-size: 15px;
+    transition: 0.2s;
+}
+
+.nav-links a:hover {
+    opacity: 0.75;
+}
+
+
+/* ================= PAGE ================= */
+
+.register-page {
+    padding: 50px 15px;
+}
+
+
+/* ================= MAIN CARD ================= */
+
+.register-card {
+    width: 85%;
+    max-width: 950px;
+    margin: 40px auto;
+
+    background: white;
+    border-radius: 24px;
+    overflow: hidden;
+
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.12);
+
+    display: flex;
+    min-height: 600px;
+}
+
+
+/* ================= IMAGE / HEADER SECTION ================= */
+
+.register-header {
+    width: 43%;
+
+    background: linear-gradient(
+        135deg,
+        #198754,
+        #20c997
+    );
+
+    color: white;
+    text-align: center;
+
+    padding: 40px 20px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.register-icon {
+    width: 60px;
+    height: 60px;
+
+    margin-bottom: 10px;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,0.18);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 27px;
+}
+
+.register-header h1 {
+    margin-top: 10px;
+    margin-bottom: 8px;
+
+    font-size: 27px;
+    font-weight: 700;
+}
+
+.register-header p {
+    margin: 0;
+    opacity: 0.95;
+}
+
+.register-header img {
+    margin-top: 25px;
+
+    width: 100%;
+    max-width: 400px;
+    height: 300px;
+
+    object-fit: cover;
+
+    border-radius: 15px;
+}
+
+
+/* ================= FORM SECTION ================= */
+
+.register-form-section {
+    width: 57%;
+}
+
+.register-form {
+    padding: 30px 42px;
+}
+
+.register-form p {
+    margin-bottom: 18px;
+}
+
+.register-form label {
+    display: block;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    color: #344054;
+
+    margin-bottom: 7px;
+}
+
+
+/* ================= INPUTS ================= */
+
+.register-form input,
+.register-form textarea,
+.register-form select {
+    width: 100%;
+
+    min-height: 45px;
+
+    padding: 10px 13px;
+
+    border: 1px solid #d5dce3;
+
+    border-radius: 9px;
+
+    background: white;
+
+    font-size: 14px;
+
+    transition: 0.2s;
+}
+
+.register-form textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.register-form input:focus,
+.register-form textarea:focus,
+.register-form select:focus {
+    outline: none;
+
+    border-color: #198754;
+
+    box-shadow: 0 0 0 3px rgba(25,135,84,0.12);
+}
+
+
+/* ================= HELP TEXT ================= */
+
+.register-form .helptext {
+    display: block;
+
+    margin-top: 5px;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+
+    color: #6c757d;
+}
+
+
+/* ================= ERRORS ================= */
+
+.register-form .errorlist {
+    color: #dc3545;
+
+    font-size: 13px;
+
+    margin: 5px 0;
+
+    padding-left: 18px;
+}
+
+
+/* ================= NGO SECTION ================= */
+
+#ngoFields {
+    background: #f1faf6;
+
+    border-left: 4px solid #198754;
+
+    padding: 18px;
+
+    border-radius: 12px;
+
+    margin-bottom: 18px;
+}
+
+#ngoFields::before {
+    content: "🏢 NGO Information";
+
+    display: block;
+
+    color: #198754;
+
+    font-weight: 700;
+
+    font-size: 15px;
+
+    margin-bottom: 15px;
+}
+
+
+/* ================= DONOR SECTION ================= */
+
+#donorFields {
+    background: #f1faf6;
+
+    border-left: 4px solid #198754;
+
+    padding: 18px;
+
+    border-radius: 12px;
+
+    margin-bottom: 18px;
+}
+
+#donorFields h5 {
+    color: #198754;
+
+    font-weight: 700;
+
+    font-size: 17px;
+
+    margin-bottom: 20px;
+}
+
+
+/* ================= VERIFICATION SECTION ================= */
+
+#verificationFields {
+    background: #f1faf6;
+
+    border-left: 4px solid #198754;
+
+    padding: 18px;
+
+    border-radius: 12px;
+
+    margin-bottom: 18px;
+}
+
+#verificationFields::before {
+    content: "📄 Verification Document";
+
+    display: block;
+
+    color: #198754;
+
+    font-weight: 700;
+
+    font-size: 15px;
+
+    margin-bottom: 15px;
+}
+
+#verificationFields input[type="file"] {
+    padding: 9px;
+
+    background: white;
+}
+
+#verificationFields .form-text {
+    font-size: 12px;
+
+    color: #6c757d;
+
+    margin-top: 6px;
+
+    line-height: 1.5;
+}
+
+
+/* ================= BUTTON ================= */
+
+.register-button {
+    width: 100%;
+
+    height: 50px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    margin-top: 8px;
+
+    background: linear-gradient(
+        135deg,
+        #198754,
+        #20c997
+    );
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.25s;
+}
+
+.register-button:hover {
+    transform: translateY(-2px);
+
+    box-shadow: 0 8px 20px rgba(25,135,84,0.25);
+}
+
+
+/* ================= LOGIN ================= */
+
+.login-link {
+    text-align: center;
+
+    margin-top: 18px;
+
+    padding-top: 16px;
+
+    border-top: 1px solid #eeeeee;
+
+    font-size: 14px;
+
+    color: #6c757d;
+}
+
+.login-link a {
+    color: #198754;
+
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 850px) {
+
+    .register-card {
+        flex-direction: column;
+    }
+
+    .register-header {
+        width: 100%;
+        min-height: 300px;
+    }
+
+    .register-form-section {
+        width: 100%;
+    }
+
+    .register-header img {
+        height: 250px;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .register-form {
+        padding: 25px 20px;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .register-header h1 {
+        font-size: 23px;
+    }
+
+    .register-header img {
+        height: 220px;
+    }
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="register-navbar">
+
+    <div class="container">
+
+        <a href="/" class="brand">
+            🍽 FoodLink
+        </a>
+
+        <div class="nav-links">
+
+            <a href="/">
+                Home
+            </a>
+
+            <a href="{% url 'features' %}">
+                Features
+            </a>
+
+            <a href="/accounts/login/">
+                Login
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- ================= REGISTER PAGE ================= -->
+
+<div class="register-page">
+
+    <div class="register-card">
+
+
+        <!-- ================= HEADER / IMAGE ================= -->
+
+        <div class="register-header">
+
+            <div class="register-icon">
+
+                <i class="bi bi-person-plus-fill"></i>
+
+            </div>
+
+            <h1>
+                Create Your FoodLink Account
+            </h1>
+
+            <p>
+                Join FoodLink and help reduce food waste.
+            </p>
+
+            <img
+                src="{% static 'images/foodlink-register.jpg' %}"
+                alt="FoodLink Registration"
+            >
+
+        </div>
+
+
+        <!-- ================= FORM SECTION ================= -->
+
+        <div class="register-form-section">
+
+            <div class="register-form">
+
+                <form
+                    method="POST"
+                    enctype="multipart/form-data"
+                >
+
+                    {% csrf_token %}
+
+
+                    <!-- ================= GENERAL ERRORS ================= -->
+
+                    {% if form.non_field_errors %}
+
+                        <div class="alert alert-danger">
+
+                            {{ form.non_field_errors }}
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <!-- ================= USERNAME ================= -->
+
+                    <div class="mb-3">
+
+                        {{ form.username.label_tag }}
+
+                        {{ form.username }}
+
+                        {% if form.username.errors %}
+
+                            <div class="text-danger small mt-1">
+
+                                {{ form.username.errors }}
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- ================= EMAIL ================= -->
+
+                    <div class="mb-3">
+
+                        {{ form.email.label_tag }}
+
+                        {{ form.email }}
+
+                        {% if form.email.errors %}
+
+                            <div class="text-danger small mt-1">
+
+                                {{ form.email.errors }}
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- ================= FIRST NAME ================= -->
+
+                    <div class="mb-3">
+
+                        {{ form.first_name.label_tag }}
+
+                        {{ form.first_name }}
+
+                        {% if form.first_name.errors %}
+
+                            <div class="text-danger small mt-1">
+
+                                {{ form.first_name.errors }}
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- ================= LAST NAME ================= -->
+
+                    <div class="mb-3">
+
+                        {{ form.last_name.label_tag }}
+
+                        {{ form.last_name }}
+
+                        {% if form.last_name.errors %}
+
+                            <div class="text-danger small mt-1">
+
+                                {{ form.last_name.errors }}
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- ================= USER TYPE ================= -->
+
+                    <div class="mb-3">
+
+                        {{ form.user_type.label_tag }}
+
+                        {{ form.user_type }}
+
+                        {% if form.user_type.errors %}
+
+                            <div class="text-danger small mt-1">
+
+                                {{ form.user_type.errors }}
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- ================================================= -->
+                    <!-- DONOR DETAILS -->
+                    <!-- ================================================= -->
+
+                    <div
+                        id="donorFields"
+                        style="display: none"
+                    >
+
+                        <h5 class="mt-2 mb-3">
+
+                            <i class="bi bi-building-check"></i>
+
+                            Donor Verification Details
+
+                        </h5>
+
+
+                        <!-- PHONE -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Phone Number
+                            </label>
+
+                            {{ form.phone }}
+
+                            {% if form.phone.errors %}
+
+                                <div class="text-danger small mt-1">
+
+                                    {{ form.phone.errors }}
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- BUSINESS NAME -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Business / Donor Name
+                            </label>
+
+                            {{ form.business_name }}
+
+                            {% if form.business_name.errors %}
+
+                                <div class="text-danger small mt-1">
+
+                                    {{ form.business_name.errors }}
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- BUSINESS TYPE -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Business Type
+                            </label>
+
+                            {{ form.business_type }}
+
+                            {% if form.business_type.errors %}
+
+                                <div class="text-danger small mt-1">
+
+                                    {{ form.business_type.errors }}
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- ADDRESS -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Business / Pickup Address
+                            </label>
+
+                            {{ form.address }}
+
+                            {% if form.address.errors %}
+
+                                <div class="text-danger small mt-1">
+
+                                    {{ form.address.errors }}
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- CITY + PINCODE -->
+
+                        <div class="row">
+
+                            <!-- CITY -->
+
+                            <div class="col-md-6 mb-3">
+
+                                <label class="form-label">
+                                    City
+                                </label>
+
+                                {{ form.city }}
+
+                                {% if form.city.errors %}
+
+                                    <div class="text-danger small mt-1">
+
+                                        {{ form.city.errors }}
+
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- PINCODE -->
+
+                            <div class="col-md-6 mb-3">
+
+                                <label class="form-label">
+                                    Pincode
+                                </label>
+
+                                {{ form.pincode }}
+
+                                {% if form.pincode.errors %}
+
+                                    <div class="text-danger small mt-1">
+
+                                        {{ form.pincode.errors }}
+
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- FOOD CATEGORIES -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Food Categories
+                            </label>
+
+                            {{ form.food_categories }}
+
+                            {% if form.food_categories.errors %}
+
+                                <div class="text-danger small mt-1">
+
+                                    {{ form.food_categories.errors }}
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- BUSINESS DESCRIPTION -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Business Description
+                            </label>
+
+                            {{ form.business_description }}
+
+                            {% if form.business_description.errors %}
+
+                                <div class="text-danger small mt-1">
+
+                                    {{ form.business_description.errors }}
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ================================================= -->
+                    <!-- NGO DETAILS -->
+                    <!-- ================================================= -->
+
+                    <div
+                        id="ngoFields"
+                        style="display: none"
+                    >
+
+                        <!-- NGO NAME -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                NGO Name
+                            </label>
+
+                            {{ form.ngo_name }}
+
+                            {% if form.ngo_name.errors %}
+
+                                <div class="text-danger small mt-1">
+
+                                    {{ form.ngo_name.errors }}
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- NGO ADDRESS -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                NGO Address
+                            </label>
+
+                            {{ form.address }}
+
+                            {% if form.address.errors %}
+
+                                <div class="text-danger small mt-1">
+
+                                    {{ form.address.errors }}
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- NGO CITY -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                City
+                            </label>
+
+                            {{ form.city }}
+
+                            {% if form.city.errors %}
+
+                                <div class="text-danger small mt-1">
+
+                                    {{ form.city.errors }}
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ================================================= -->
+                    <!-- COMMON VERIFICATION DOCUMENT -->
+                    <!-- ================================================= -->
+
+                    <div
+                        id="verificationFields"
+                        style="display: none"
+                    >
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Verification Document
+                            </label>
+
+                            {{ form.verification_document }}
+
+                            <div class="form-text">
+
+                                <strong>Donor:</strong>
+                                Upload a valid business or organization proof.
+
+                                <br>
+
+                                <strong>NGO:</strong>
+                                Upload NGO registration certificate or
+                                other valid organization proof.
+
+                                <br>
+
+                                Accepted formats:
+                                PDF, JPG, JPEG, PNG.
+
+                                Maximum size: 5 MB.
+
+                            </div>
+
+
+                            {% if form.verification_document.errors %}
+
+                                <div class="text-danger small mt-1">
+
+                                    {{ form.verification_document.errors }}
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ================= PASSWORD ================= -->
+
+                    <div class="mb-3">
+
+                        {{ form.password1.label_tag }}
+
+                        {{ form.password1 }}
+
+                        {% if form.password1.errors %}
+
+                            <div class="text-danger small mt-1">
+
+                                {{ form.password1.errors }}
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- ================= CONFIRM PASSWORD ================= -->
+
+                    <div class="mb-3">
+
+                        {{ form.password2.label_tag }}
+
+                        {{ form.password2 }}
+
+                        {% if form.password2.errors %}
+
+                            <div class="text-danger small mt-1">
+
+                                {{ form.password2.errors }}
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- ================= REGISTER BUTTON ================= -->
+
+                    <button
+                        type="submit"
+                        class="register-button"
+                    >
+
+                        <i class="bi bi-person-check-fill"></i>
+
+                        Create Account
+
+                    </button>
+
+                </form>
+
+
+                <!-- ================= LOGIN LINK ================= -->
+
+                <div class="login-link">
+
+                    Already have an account?
+
+                    <a href="/accounts/login/">
+                        Login
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- JAVASCRIPT -->
+<!-- ================================================= -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const userType = document.getElementById("id_user_type");
+
+    const donorFields =
+        document.getElementById("donorFields");
+
+    const ngoFields =
+        document.getElementById("ngoFields");
+
+    const verificationFields =
+        document.getElementById("verificationFields");
+
+
+    function toggleFields() {
+
+        if (userType.value === "DONOR") {
+
+            donorFields.style.display = "block";
+
+            ngoFields.style.display = "none";
+
+            verificationFields.style.display = "block";
+
+        }
+
+        else if (userType.value === "NGO") {
+
+            donorFields.style.display = "none";
+
+            ngoFields.style.display = "block";
+
+            verificationFields.style.display = "block";
+
+        }
+
+        else {
+
+            donorFields.style.display = "none";
+
+            ngoFields.style.display = "none";
+
+            verificationFields.style.display = "none";
+
+        }
+
+    }
+
+
+    userType.addEventListener(
+        "change",
+        toggleFields
+    );
+
+
+    toggleFields();
+
+});
+
+</script>
+
+
+</body>
+
+</html>

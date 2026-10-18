@@ -1,0 +1,216 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container-fluid mt-4">
+
+    <!-- Header -->
+    <div
+        class="card shadow border-0 mb-4"
+        style="
+            background: linear-gradient(135deg, #198754, #20c997);
+            border-radius: 18px;
+        "
+    >
+
+        <div class="card-body text-white">
+
+            <div class="row align-items-center">
+
+                <div class="col-md-8">
+
+                    <h2 class="mb-1">
+                        ⚠️ Complaints & Reports
+                    </h2>
+
+                    <p class="mb-0">
+                        View and manage complaints submitted by donors and NGOs.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Complaints Table -->
+
+    <div class="card shadow border-0">
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-hover table-striped align-middle">
+
+                    <thead class="table-dark">
+
+                        <tr>
+
+                            <th>Reporter</th>
+
+                            <th>Reported User</th>
+
+                            <th>Reason</th>
+
+                            <th>Description</th>
+
+                            <th>Date</th>
+
+                            <th>Status</th>
+
+                            <th>Action</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for complaint in complaints %}
+
+                        <tr>
+
+                            <!-- Reporter -->
+
+                            <td>
+                                <strong>
+                                    {{ complaint.reporter.username }}
+                                </strong>
+                            </td>
+
+
+                            <!-- Reported User -->
+
+                            <td>
+                                <strong>
+                                    {{ complaint.reported_user.username }}
+                                </strong>
+                            </td>
+
+
+                            <!-- Reason -->
+
+                            <td>
+                                {{ complaint.get_reason_display }}
+                            </td>
+
+
+                            <!-- Description -->
+
+                            <td style="max-width: 300px;">
+
+                                {{ complaint.description }}
+
+                            </td>
+
+
+                            <!-- Date -->
+
+                            <td>
+
+                                {{ complaint.created_at|date:"d M Y, h:i A" }}
+
+                            </td>
+
+
+                            <!-- Status -->
+
+                            <td>
+
+                                {% if complaint.status == "PENDING" %}
+
+                                    <span class="badge bg-warning text-dark">
+                                        Pending
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge bg-success">
+                                        Resolved
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- Action -->
+
+                            <td>
+
+                                {% if complaint.status == "PENDING" %}
+
+                                    <form
+                                        method="POST"
+                                        action="{% url 'resolve_complaint' complaint.id %}"
+                                        style="display:inline;"
+                                    >
+
+                                        {% csrf_token %}
+
+                                        <button
+                                            type="submit"
+                                            class="btn btn-success btn-sm"
+                                            onclick="return confirm('Mark this complaint as resolved?');"
+                                        >
+                                            ✓ Resolve
+                                        </button>
+
+                                    </form>
+
+                                {% else %}
+
+                                    <span class="text-success">
+                                        ✓ Resolved
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+
+                        {% empty %}
+
+                        <tr>
+
+                            <td
+                                colspan="7"
+                                class="text-center py-5"
+                            >
+
+                                <h5 class="text-muted">
+                                    No complaints found
+                                </h5>
+
+                                <p class="text-muted mb-0">
+                                    There are currently no complaints or reports.
+                                </p>
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+

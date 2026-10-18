@@ -1,0 +1,420 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <!-- Page Heading -->
+    <div class="text-center mb-4">
+        <h2 class="fw-bold text-success">My Profile</h2>
+        <p class="text-muted">View and update your personal information</p>
+    </div>
+
+    <!-- Success / Error Messages -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert
+                {% if message.tags == 'error' %}
+                    alert-danger
+                {% elif message.tags == 'warning' %}
+                    alert-warning
+                {% else %}
+                    alert-success
+                {% endif %}
+                alert-dismissible fade show"
+                role="alert">
+
+                {{ message }}
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert">
+                </button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- Profile Card -->
+    <div class="card shadow border-0 rounded-4">
+
+        <div class="card-header bg-success text-white rounded-top-4">
+            <h4 class="mb-0">👤 Profile Information</h4>
+        </div>
+
+        <div class="card-body p-4">
+
+            <form method="POST" enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                <!-- Display All Form Errors -->
+                {% if form.errors %}
+                    <div class="alert alert-danger">
+                        <strong>
+                            Unable to update profile. Please correct these errors:
+                        </strong>
+
+                        {{ form.errors }}
+                    </div>
+                {% endif %}
+
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+
+                <!-- Profile Photo -->
+                <div class="text-center mb-4">
+
+                    {% if profile_user.profile_photo %}
+                        <img src="{{ profile_user.profile_photo.url }}"
+                             alt="Profile Photo"
+                             class="rounded-circle shadow"
+                             width="130"
+                             height="130"
+                             style="object-fit: cover;">
+                    {% else %}
+                        <div class="rounded-circle bg-light border d-flex align-items-center justify-content-center mx-auto"
+                             style="width:130px; height:130px;">
+                            <span style="font-size:55px;">👤</span>
+                        </div>
+                    {% endif %}
+
+                    <div class="mt-3">
+
+                        <label class="form-label fw-semibold">
+                            Profile Photo
+                        </label>
+
+                        {{ form.profile_photo }}
+
+                        {% for error in form.profile_photo.errors %}
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+
+                <!-- Personal Details -->
+                <h5 class="text-success border-bottom pb-2 mb-3">
+                    Personal Details
+                </h5>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-semibold">
+                            First Name
+                        </label>
+
+                        {{ form.first_name }}
+
+                        {% for error in form.first_name.errors %}
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-semibold">
+                            Last Name
+                        </label>
+
+                        {{ form.last_name }}
+
+                        {% for error in form.last_name.errors %}
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-semibold">
+                            Email
+                        </label>
+
+                        {{ form.email }}
+
+                        {% for error in form.email.errors %}
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-semibold">
+                            Phone Number
+                        </label>
+
+                        {{ form.phone }}
+
+                        {% for error in form.phone.errors %}
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                </div>
+
+                <!-- Address Details -->
+                <h5 class="text-success border-bottom pb-2 mb-3 mt-3">
+                    Address Details
+                </h5>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-semibold">
+                            City
+                        </label>
+
+                        {{ form.city }}
+
+                        {% for error in form.city.errors %}
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-semibold">
+                            Pincode
+                        </label>
+
+                        {{ form.pincode }}
+
+                        {% for error in form.pincode.errors %}
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <label class="form-label fw-semibold">
+                            Address
+                        </label>
+
+                        {{ form.address }}
+
+                        {% for error in form.address.errors %}
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                </div>
+
+                <!-- DONOR DETAILS -->
+                {% if profile_user.user_type == "DONOR" %}
+
+                    <h5 class="text-success border-bottom pb-2 mb-3 mt-4">
+                        🏪 Business / Donor Details
+                    </h5>
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-semibold">
+                                Business / Hotel / Shop Name
+                            </label>
+
+                            {{ form.business_name }}
+
+                            {% for error in form.business_name.errors %}
+                                <div class="text-danger small">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-semibold">
+                                Business Type
+                            </label>
+
+                            {{ form.business_type }}
+
+                            {% for error in form.business_type.errors %}
+                                <div class="text-danger small">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label class="form-label fw-semibold">
+                                Food Categories
+                            </label>
+
+                            {{ form.food_categories }}
+
+                            <small class="text-muted">
+                                Example: Rice, Bakery Items, Fruits, Vegetables
+                            </small>
+
+                            {% for error in form.food_categories.errors %}
+                                <div class="text-danger small">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label class="form-label fw-semibold">
+                                Business Description
+                            </label>
+
+                            {{ form.business_description }}
+
+                            {% for error in form.business_description.errors %}
+                                <div class="text-danger small">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+                <!-- NGO DETAILS -->
+                {% if profile_user.user_type == "NGO" %}
+
+                    <h5 class="text-success border-bottom pb-2 mb-3 mt-4">
+                        🤝 NGO Details
+                    </h5>
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-semibold">
+                                NGO Name
+                            </label>
+
+                            {{ form.ngo_name }}
+
+                            {% for error in form.ngo_name.errors %}
+                                <div class="text-danger small">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-semibold">
+                                Registration Number
+                            </label>
+
+                            {{ form.ngo_registration_number }}
+
+                            {% for error in form.ngo_registration_number.errors %}
+                                <div class="text-danger small">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-semibold">
+                                NGO Type
+                            </label>
+
+                            {{ form.ngo_type }}
+
+                            {% for error in form.ngo_type.errors %}
+                                <div class="text-danger small">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-semibold">
+                                Website
+                            </label>
+
+                            {{ form.ngo_website }}
+
+                            {% for error in form.ngo_website.errors %}
+                                <div class="text-danger small">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-semibold">
+                                Number of Beneficiaries
+                            </label>
+
+                            {{ form.beneficiaries }}
+
+                            {% for error in form.beneficiaries.errors %}
+                                <div class="text-danger small">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-semibold">
+                                Areas Served
+                            </label>
+
+                            {{ form.areas_served }}
+
+                            {% for error in form.areas_served.errors %}
+                                <div class="text-danger small">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label class="form-label fw-semibold">
+                                NGO Description
+                            </label>
+
+                            {{ form.ngo_description }}
+
+                            {% for error in form.ngo_description.errors %}
+                                <div class="text-danger small">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+                <!-- Update Button -->
+                <div class="text-center mt-4">
+
+                    <button type="submit"
+                            class="btn btn-success px-5 py-2 rounded-pill fw-semibold">
+                        💾 Update Profile
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+

@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid mt-4">
+
+<div class="card shadow border-0 mb-4"
+style="background:linear-gradient(135deg,#6610f2,#0dcaf0);">
+
+<div class="card-body text-white">
+
+<h2>📊 Analytics Dashboard</h2>
+
+<p class="mb-0">
+
+Platform statistics and AI insights.
+
+</p>
+
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="col-md-6">
+
+<div class="card shadow">
+
+<div class="card-header bg-primary text-white">
+
+Top Donors
+
+</div>
+
+<div class="card-body">
+
+<table class="table">
+
+<thead>
+
+<tr>
+
+<th>Donor</th>
+
+<th>Total</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for donor in top_donors %}
+
+<tr>
+
+<td>{{ donor.donor__username }}</td>
+
+<td>{{ donor.total }}</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-6">
+
+<div class="card shadow">
+
+<div class="card-header bg-success text-white">
+
+Food Types
+
+</div>
+
+<div class="card-body">
+
+<table class="table">
+
+<thead>
+
+<tr>
+
+<th>Food Type</th>
+
+<th>Total</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for item in food_types %}
+
+<tr>
+
+<td>{{ item.food_type }}</td>
+
+<td>{{ item.total }}</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}

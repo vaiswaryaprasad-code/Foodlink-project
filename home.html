@@ -1,0 +1,1324 @@
+{% extends 'base.html' %} {% block content %}
+
+<style>
+  /* =========================================================
+   FOODLINK PREMIUM LANDING PAGE
+   ========================================================= */
+
+  :root {
+    --forest: #103c2b;
+    --green: #1d704c;
+    --green-light: #e9f4ed;
+    --cream: #f8f6ef;
+    --gold: #c7a45d;
+    --dark: #17221d;
+    --text: #68736d;
+    --white: #ffffff;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    overflow-x: hidden;
+    background: var(--cream);
+  }
+
+  /* =========================================================
+   HERO SECTION
+   ========================================================= */
+
+  .hero {
+    position: relative;
+    min-height: 720px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background: var(--forest);
+    color: white;
+  }
+
+  .hero::before {
+    content: "";
+    position: absolute;
+    width: 650px;
+    height: 650px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+    right: -250px;
+    top: -250px;
+    animation: rotateSlow 25s linear infinite;
+  }
+
+  .hero::after {
+    content: "";
+    position: absolute;
+    width: 450px;
+    height: 450px;
+    border: 1px solid rgba(199, 164, 93, 0.12);
+    border-radius: 50%;
+    left: -250px;
+    bottom: -250px;
+    animation: rotateSlow 20s linear infinite reverse;
+  }
+
+  .hero-container {
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-content {
+    animation: heroText 1s ease forwards;
+  }
+
+  .hero-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+
+    padding: 9px 17px;
+
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50px;
+
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(10px);
+
+    font-size: 12px;
+    letter-spacing: 1.7px;
+    text-transform: uppercase;
+  }
+
+  .hero-label span {
+    width: 7px;
+    height: 7px;
+    background: var(--gold);
+    border-radius: 50%;
+    box-shadow: 0 0 12px var(--gold);
+  }
+
+  .hero-title {
+    margin-top: 25px;
+
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: clamp(3rem, 6vw, 5.7rem);
+
+    font-weight: 500;
+
+    line-height: 1;
+
+    letter-spacing: -3px;
+
+    max-width: 700px;
+  }
+
+  .hero-title em {
+    color: #d7bd82;
+  }
+
+  .hero-description {
+    max-width: 590px;
+
+    margin-top: 27px;
+
+    color: rgba(255, 255, 255, 0.75);
+
+    font-size: 1.05rem;
+
+    line-height: 1.8;
+  }
+
+  .hero-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 13px;
+
+    margin-top: 32px;
+  }
+
+  .hero-btn {
+    padding: 13px 27px;
+
+    border-radius: 50px;
+
+    font-weight: 600;
+
+    transition: all 0.3s ease;
+  }
+
+  .hero-btn:hover {
+    transform: translateY(-4px);
+  }
+
+  .hero-btn-primary {
+    background: var(--gold);
+    border: none;
+    color: #132b20;
+  }
+
+  .hero-btn-primary:hover {
+    background: #dfc486;
+    color: #132b20;
+    box-shadow: 0 12px 30px rgba(199, 164, 93, 0.25);
+  }
+
+  .hero-btn-outline {
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    color: white;
+    background: transparent;
+  }
+
+  .hero-btn-outline:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  /* Hero image */
+
+  .hero-image-wrapper {
+    position: relative;
+
+    animation:
+      imageAppear 1.2s ease forwards,
+      imageFloat 6s ease-in-out infinite;
+
+    animation-delay: 0.2s;
+  }
+
+  .hero-image {
+    width: 100%;
+    height: 500px;
+
+    object-fit: cover;
+
+    border-radius: 28px;
+
+    border: 1px solid rgba(255, 255, 255, 0.16);
+
+    box-shadow: 0 35px 80px rgba(0, 0, 0, 0.35);
+  }
+
+  /* Image overlay */
+
+  .hero-image-wrapper::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    border-radius: 28px;
+
+    background: linear-gradient(180deg, transparent 55%, rgba(0, 0, 0, 0.45));
+  }
+
+  /* Floating information card */
+
+  .hero-floating-card {
+    position: absolute;
+
+    left: -35px;
+    bottom: 35px;
+
+    width: 210px;
+
+    padding: 19px;
+
+    border-radius: 18px;
+
+    background: rgba(255, 255, 255, 0.92);
+
+    color: var(--dark);
+
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+
+    z-index: 4;
+
+    animation: cardFloat 5s ease-in-out infinite;
+  }
+
+  .hero-floating-card small {
+    color: var(--text);
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+
+  .hero-floating-card strong {
+    display: block;
+    margin-top: 6px;
+    font-size: 17px;
+  }
+
+  .card-status {
+    margin-top: 9px;
+    color: var(--green);
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  /* =========================================================
+   INTRODUCTION
+   ========================================================= */
+
+  .intro {
+    padding: 110px 0;
+    background: var(--cream);
+  }
+
+  .eyebrow {
+    color: var(--green);
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+  }
+
+  .serif-title {
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: clamp(2.4rem, 5vw, 4rem);
+
+    line-height: 1.15;
+
+    font-weight: 500;
+
+    color: var(--dark);
+  }
+
+  .intro-text {
+    max-width: 780px;
+
+    margin: 25px auto 0;
+
+    color: var(--text);
+
+    font-size: 1.05rem;
+
+    line-height: 1.9;
+  }
+
+  /* =========================================================
+   IMAGE STORY
+   ========================================================= */
+
+  .story {
+    padding: 110px 0;
+
+    background: white;
+  }
+
+  .story-image {
+    width: 100%;
+
+    height: 470px;
+
+    object-fit: cover;
+
+    border-radius: 25px;
+
+    box-shadow: 0 25px 60px rgba(20, 50, 35, 0.12);
+  }
+
+  .story-content {
+    padding-left: 35px;
+  }
+
+  .story-content p {
+    color: var(--text);
+
+    line-height: 1.9;
+
+    margin-top: 20px;
+  }
+
+  .story-list {
+    margin-top: 25px;
+  }
+
+  .story-item {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 13px;
+
+    margin-bottom: 17px;
+  }
+
+  .story-check {
+    width: 28px;
+    height: 28px;
+
+    min-width: 28px;
+
+    border-radius: 50%;
+
+    background: var(--green-light);
+
+    color: var(--green);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  /* =========================================================
+   IMPACT
+   ========================================================= */
+
+  .impact {
+    padding: 70px 0;
+
+    background: #edf4ef;
+  }
+
+  .impact-card {
+    text-align: center;
+
+    padding: 25px;
+
+    border-right: 1px solid #d7e3da;
+  }
+
+  .impact-card:last-child {
+    border-right: none;
+  }
+
+  .impact-number {
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: 2.6rem;
+
+    color: var(--green);
+  }
+
+  .impact-label {
+    margin-top: 5px;
+
+    color: var(--text);
+
+    font-size: 13px;
+  }
+
+  /* =========================================================
+   HOW IT WORKS
+   ========================================================= */
+
+  .process {
+    padding: 110px 0;
+
+    background: var(--cream);
+  }
+
+  .process-card {
+    height: 100%;
+
+    padding: 35px 30px;
+
+    border: 1px solid #e0e6e1;
+
+    border-radius: 22px;
+
+    background: white;
+
+    transition: all 0.4s ease;
+  }
+
+  .process-card:hover {
+    transform: translateY(-10px);
+
+    box-shadow: 0 20px 50px rgba(16, 60, 43, 0.1);
+  }
+
+  .process-number {
+    font-family: Georgia, "Times New Roman", serif;
+
+    color: var(--gold);
+
+    font-size: 45px;
+  }
+
+  .process-card h4 {
+    margin-top: 20px;
+
+    font-weight: 700;
+
+    color: var(--dark);
+  }
+
+  .process-card p {
+    color: var(--text);
+
+    line-height: 1.75;
+
+    margin-top: 10px;
+  }
+
+  /* =========================================================
+   FEATURES
+   ========================================================= */
+
+  .features {
+    padding: 110px 0;
+
+    background: white;
+  }
+
+  .feature-card {
+    height: 100%;
+
+    padding: 30px;
+
+    border: 1px solid #e2e8e3;
+
+    border-radius: 20px;
+
+    position: relative;
+
+    overflow: hidden;
+
+    transition: all 0.4s ease;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-8px);
+
+    box-shadow: 0 20px 50px rgba(16, 60, 43, 0.09);
+  }
+
+  .feature-icon {
+    width: 55px;
+    height: 55px;
+
+    border-radius: 15px;
+
+    background: var(--green-light);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 22px;
+
+    margin-bottom: 22px;
+
+    transition: transform 0.3s ease;
+  }
+
+  .feature-card:hover .feature-icon {
+    transform: rotate(-6deg) scale(1.1);
+  }
+
+  .feature-card h4 {
+    color: var(--dark);
+
+    font-weight: 700;
+  }
+
+  .feature-card p {
+    color: var(--text);
+
+    line-height: 1.7;
+
+    margin-top: 10px;
+  }
+
+  /* =========================================================
+   IMAGE CARDS
+   ========================================================= */
+
+  .gallery {
+    padding: 100px 0;
+
+    background: #f3f6f3;
+  }
+
+  .gallery-card {
+    position: relative;
+
+    overflow: hidden;
+
+    border-radius: 22px;
+
+    height: 330px;
+  }
+
+  .gallery-card img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    transition: transform 0.7s ease;
+  }
+
+  .gallery-card:hover img {
+    transform: scale(1.08);
+  }
+
+  .gallery-overlay {
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: flex-end;
+
+    padding: 25px;
+
+    background: linear-gradient(transparent 40%, rgba(0, 0, 0, 0.75));
+
+    color: white;
+  }
+
+  .gallery-overlay h4 {
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: 1.6rem;
+
+    margin: 0;
+  }
+
+  /* =========================================================
+   QUOTE
+   ========================================================= */
+
+  .quote {
+    padding: 120px 20px;
+
+    text-align: center;
+
+    background: var(--forest);
+
+    color: white;
+  }
+
+  .quote-mark {
+    font-family: Georgia, "Times New Roman", serif;
+
+    color: var(--gold);
+
+    font-size: 80px;
+
+    line-height: 0.5;
+  }
+
+  .quote-text {
+    max-width: 900px;
+
+    margin: 35px auto 0;
+
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: clamp(2rem, 4vw, 3.4rem);
+
+    line-height: 1.25;
+  }
+
+  .quote-text em {
+    color: #d5b97e;
+  }
+
+  /* =========================================================
+   CTA
+   ========================================================= */
+
+  .cta {
+    padding: 110px 20px;
+
+    text-align: center;
+
+    background: linear-gradient(135deg, #e9f3ed, #f8f6ef);
+  }
+
+  .cta h2 {
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: clamp(2.4rem, 5vw, 4rem);
+
+    font-weight: 500;
+
+    color: var(--dark);
+  }
+
+  .cta p {
+    max-width: 650px;
+
+    margin: 20px auto 30px;
+
+    color: var(--text);
+
+    line-height: 1.8;
+  }
+
+  /* =========================================================
+   FOOTER
+   ========================================================= */
+
+  .home-footer {
+    padding: 28px 15px;
+
+    background: #09291d;
+
+    color: rgba(255, 255, 255, 0.65);
+
+    text-align: center;
+
+    font-size: 13px;
+  }
+
+  /* =========================================================
+   SCROLL REVEAL
+   ========================================================= */
+
+  .reveal {
+    opacity: 0;
+
+    transform: translateY(40px);
+
+    transition:
+      opacity 0.8s ease,
+      transform 0.8s ease;
+  }
+
+  .reveal.show {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+
+  /* =========================================================
+   ANIMATIONS
+   ========================================================= */
+
+  @keyframes heroText {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes imageAppear {
+    from {
+      opacity: 0;
+      transform: translateX(40px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes imageFloat {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+
+  @keyframes cardFloat {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-12px);
+    }
+  }
+
+  @keyframes rotateSlow {
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+  @media (max-width: 991px) {
+    .hero {
+      padding: 90px 0;
+    }
+
+    .hero-image-wrapper {
+      margin-top: 55px;
+    }
+
+    .hero-floating-card {
+      left: 20px;
+    }
+
+    .story-content {
+      padding-left: 0;
+
+      margin-top: 40px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      min-height: auto;
+    }
+
+    .hero-title {
+      letter-spacing: -1px;
+    }
+
+    .hero-image {
+      height: 380px;
+    }
+
+    .impact-card {
+      border-right: none;
+
+      border-bottom: 1px solid #d7e3da;
+    }
+
+    .impact-card:last-child {
+      border-bottom: none;
+    }
+
+    .intro,
+    .story,
+    .process,
+    .features,
+    .gallery {
+      padding: 75px 0;
+    }
+
+    .quote {
+      padding: 80px 20px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>
+
+<!-- =====================================================
+     HERO
+     ===================================================== -->
+
+<section class="hero">
+  
+  <div class="container hero-container">
+    <div class="row align-items-center">
+      <!-- LEFT -->
+
+      <div class="col-lg-6 hero-content">
+        <div class="hero-label">
+          <span></span>
+
+          AI-Powered Food Redistribution
+        </div>
+
+        <h1 class="hero-title">
+          Good food
+          <br />
+
+          deserves a
+          <br />
+
+          <em>better destination.</em>
+        </h1>
+
+        <p class="hero-description">
+          FoodLink connects surplus food donors with trusted NGOs through
+          intelligent technology, helping reduce food waste while supporting
+          communities in need.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="/accounts/register/" class="btn hero-btn hero-btn-primary">
+            Donate Food →
+          </a>
+
+          <a href="#how-it-works" class="btn hero-btn hero-btn-outline">
+            Explore FoodLink
+          </a>
+        </div>
+      </div>
+
+      <!-- RIGHT IMAGE -->
+
+      <div class="col-lg-6">
+        <div class="hero-image-wrapper">
+          <img
+            src="/static/images/vl.jpeg"
+            class="hero-image"
+            alt="Food donation and community support"
+          />
+
+          <div class="hero-floating-card">
+            <small> FOODLINK </small>
+
+            <strong> Surplus → Support </strong>
+
+            <div class="card-status">● Smart redistribution</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</section>
+
+<!-- =====================================================
+     INTRO
+     ===================================================== -->
+
+<section class="intro">
+  
+  <div class="container text-center reveal">
+    <div class="eyebrow">About FoodLink</div>
+
+    <h2 class="serif-title mt-3">
+      Technology with a
+      <br />
+      <span style="color: #1d704c"> human purpose. </span>
+    </h2>
+
+    <p class="intro-text">
+      FoodLink is an AI-based smart food redistribution platform designed to
+      connect food donors with NGOs. By combining food safety analysis, expiry
+      monitoring, donor reliability assessment, intelligent NGO recommendations
+      and donation tracking, FoodLink helps make food redistribution safer and
+      more efficient.
+    </p>
+  </div>
+  
+</section>
+
+<!-- =====================================================
+     STORY IMAGE + CONTENT
+     ===================================================== -->
+
+<section class="story">
+  
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 reveal">
+        <img
+          src="https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=1000&q=85"
+          class="story-image"
+          alt="Fresh food prepared for distribution"
+        />
+      </div>
+
+      <div class="col-lg-6 reveal">
+        <div class="story-content">
+          <div class="eyebrow">Why FoodLink?</div>
+
+          <h2 class="serif-title mt-3">
+            Every meal
+            <br />
+            has a purpose.
+          </h2>
+
+          <p>
+            Large amounts of edible food can go unused while communities face
+            food insecurity. FoodLink creates a digital bridge between these two
+            realities.
+          </p>
+
+          <div class="story-list">
+            <div class="story-item">
+              <div class="story-check">✓</div>
+
+              <div>Smart donor-to-NGO matching</div>
+            </div>
+
+            <div class="story-item">
+              <div class="story-check">✓</div>
+
+              <div>Food safety risk assessment</div>
+            </div>
+
+            <div class="story-item">
+              <div class="story-check">✓</div>
+
+              <div>Automated expiry monitoring</div>
+            </div>
+
+            <div class="story-item">
+              <div class="story-check">✓</div>
+
+              <div>Complete donation tracking</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</section>
+
+<!-- =====================================================
+     IMPACT STRIP
+     ===================================================== -->
+
+<section class="impact">
+  
+  <div class="container">
+    <div class="row">
+      <div class="col-6 col-md-3">
+        <div class="impact-card reveal">
+          <div class="impact-number">AI</div>
+
+          <div class="impact-label">Smart NGO Matching</div>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-3">
+        <div class="impact-card reveal">
+          <div class="impact-number">24/7</div>
+
+          <div class="impact-label">Expiry Monitoring</div>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-3">
+        <div class="impact-card reveal">
+          <div class="impact-number">360°</div>
+
+          <div class="impact-label">Donation Tracking</div>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-3">
+        <div class="impact-card reveal">
+          <div class="impact-number">0</div>
+
+          <div class="impact-label">Food Waste Goal</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</section>
+
+<!-- =====================================================
+     HOW IT WORKS
+     ===================================================== -->
+
+<section id="how-it-works" class="process">
+  
+  <div class="container">
+    <div class="row mb-5 reveal">
+      <div class="col-lg-8">
+        <div class="eyebrow">How It Works</div>
+
+        <h2 class="serif-title mt-3">
+          A simple journey
+          <br />
+          from surplus to support.
+        </h2>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-md-4 reveal">
+        <div class="process-card">
+          <div class="process-number">01</div>
+
+          <h4>Donate</h4>
+
+          <p>
+            Donors post available surplus food with quantity, location and
+            expiry information.
+          </p>
+        </div>
+      </div>
+
+      <div class="col-md-4 reveal">
+        <div class="process-card">
+          <div class="process-number">02</div>
+
+          <h4>Match</h4>
+
+          <p>
+            FoodLink intelligently evaluates food safety, location, expiry and
+            NGO suitability.
+          </p>
+        </div>
+      </div>
+
+      <div class="col-md-4 reveal">
+        <div class="process-card">
+          <div class="process-number">03</div>
+
+          <h4>Redistribute</h4>
+
+          <p>
+            The NGO claims and collects the donation so that surplus food can
+            reach people who need it.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</section>
+
+<!-- =====================================================
+     FEATURES
+     ===================================================== -->
+
+<section id="features" class="features">
+  
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <div class="eyebrow">Intelligent Platform</div>
+
+      <h2 class="serif-title mt-3">
+        Designed to make
+        <br />
+        redistribution smarter.
+      </h2>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-4 reveal">
+        <div class="feature-card">
+          <div class="feature-icon">AI</div>
+
+          <h4>AI Recommendation</h4>
+
+          <p>
+            Recommends suitable NGOs based on intelligent donation matching.
+          </p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4 reveal">
+        <div class="feature-card">
+          <div class="feature-icon">✓</div>
+
+          <h4>Food Safety</h4>
+
+          <p>
+            Evaluates food safety risks to help support responsible
+            redistribution.
+          </p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4 reveal">
+        <div class="feature-card">
+          <div class="feature-icon">#</div>
+
+          <h4>Donation Tracking</h4>
+
+          <p>Track donations throughout their redistribution journey.</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4 reveal">
+        <div class="feature-card">
+          <div class="feature-icon">★</div>
+
+          <h4>Donor Reliability</h4>
+
+          <p>Uses donation history to assess donor reliability.</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4 reveal">
+        <div class="feature-card">
+          <div class="feature-icon">⏱</div>
+
+          <h4>Expiry Management</h4>
+
+          <p>
+            Monitors donation expiry to reduce the risk of distributing expired
+            food.
+          </p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4 reveal">
+        <div class="feature-card">
+          <div class="feature-icon">↗</div>
+
+          <h4>Reports & Analytics</h4>
+
+          <p>
+            Provides useful insights through dashboards and analytical reports.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</section>
+
+<!-- =====================================================
+     IMAGE GALLERY
+     ===================================================== -->
+
+<section class="gallery">
+  
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <div class="eyebrow">FoodLink In Action</div>
+
+      <h2 class="serif-title mt-3">Connecting people through food.</h2>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-md-4 reveal">
+        <div class="gallery-card">
+          <img
+            src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=85"
+            alt="Fresh food"
+          />
+
+          <div class="gallery-overlay">
+            <h4>Surplus Food</h4>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 reveal">
+        <div class="gallery-card">
+          <img
+            src="https://images.unsplash.com/photo-1594708767771-a7502209ff51?auto=format&fit=crop&w=800&q=85"
+            alt="Food preparation"
+          />
+
+          <div class="gallery-overlay">
+            <h4>Community Support</h4>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 reveal">
+        <div class="gallery-card">
+          <img
+            src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&w=800&q=85"
+            alt="Volunteers helping community"
+          />
+
+          <div class="gallery-overlay">
+            <h4>Shared Impact</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</section>
+
+<!-- =====================================================
+     QUOTE
+     ===================================================== -->
+
+<section class="quote">
+  
+  <div class="quote-mark">“</div>
+
+  <div class="quote-text">
+    What is surplus to one can become <em>support</em>
+    for another.
+  </div>
+  
+</section>
+
+<!-- =====================================================
+     FINAL CTA
+     ===================================================== -->
+
+<section class="cta">
+  
+  <div class="container reveal">
+    <div class="eyebrow">Join FoodLink</div>
+
+    <h2 class="mt-3">Let's make every meal count.</h2>
+
+    <p>
+      Have surplus food? Give it a better destination. Join FoodLink and become
+      part of a smarter food redistribution network.
+    </p>
+
+    <a href="/accounts/register/" class="btn btn-success hero-btn px-4">
+      Start Donating →
+    </a>
+  </div>
+  
+</section>
+
+<!-- =====================================================
+     FOOTER
+     ===================================================== -->
+
+<footer class="home-footer">
+   © 2026 FoodLink
+  <span class="mx-2">•</span>
+  AI-Based Smart Food Redistribution System 
+</footer>
+
+<!-- =====================================================
+     SCROLL REVEAL JAVASCRIPT
+     ===================================================== -->
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const elements = document.querySelectorAll(".reveal");
+
+    const observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("show");
+
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+
+      {
+        threshold: 0.12,
+      },
+    );
+
+    elements.forEach(function (element) {
+      observer.observe(element);
+    });
+  });
+</script>
+
+{% endblock %}
